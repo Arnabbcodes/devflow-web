@@ -1,0 +1,30 @@
+project_id = "devflow"
+
+[api]
+port = 54321
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+[studio]
+port = 54323
+
+[inbucket]
+port = 54324
+
+[storage]
+enabled = true
+
+[auth]
+enabled = true
+site_url = "http://localhost:5500"
+additional_redirect_urls = ["https://localhost:5500", "https://*.vercel.app"]
+jwt_expiry = 3600
+enable_signup = true
+
+[functions.groq-ai]
+verify_jwt = false

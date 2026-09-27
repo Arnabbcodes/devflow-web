@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - DevFlow Workspace</title>
+  <meta name="description" content="DevFlow Developer Workspace Dashboard">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- Demo Notice Banner -->
+  <div id="demo-mode-banner" class="global-banner">
+    <div class="banner-content">
+      <span class="banner-badge">Demo Mode</span>
+      <span>Operating in local simulation. Connect your live Supabase &amp; Groq keys in <a href="profile.html" style="text-decoration: underline; font-weight: bold; color: #fff;">Profile Settings</a>.</span>
+    </div>
+    <button id="close-demo-banner" class="banner-close" aria-label="Dismiss banner">✕</button>
+  </div>
+
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="app-sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+          <img src="assets/images/logo.svg" alt="DevFlow Logo" class="sidebar-logo">
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Core Workspace</div>
+        <a href="dashboard.html" class="nav-item active" data-page="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"></rect><rect x="14" y="3" width="7" height="5" rx="1"></rect><rect x="14" y="12" width="7" height="9" rx="1"></rect><rect x="3" y="16" width="7" height="5" rx="1"></rect></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="projects.html" class="nav-item" data-page="projects">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          <span>Projects</span>
+          <span class="nav-badge" id="sidebar-projects-count">0</span>
+        </a>
+        <a href="tasks.html" class="nav-item" data-page="tasks">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          <span>Tasks</span>
+          <span class="nav-badge" id="sidebar-tasks-count">0</span>
+        </a>
+
+        <div class="nav-section-title">Intelligence &amp; Engine</div>
+        <a href="workflow.html" class="nav-item" data-page="workflow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg>
+          <span>Automations</span>
+        </a>
+        <a href="analytics.html" class="nav-item" data-page="analytics">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span>Analytics</span>
+        </a>
+        <a href="focus.html" class="nav-item" data-page="focus">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span>Focus Mode</span>
+        </a>
+        <a href="notes.html" class="nav-item" data-page="notes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span>Notes</span>
+        </a>
+
+        <div class="nav-section-title">Settings</div>
+        <a href="profile.html" class="nav-item" data-page="profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>Profile &amp; Keys</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-badge">
+          <div class="user-avatar" id="sidebar-user-avatar">DF</div>
+          <div class="user-info">
+            <span class="user-name" id="sidebar-user-name">Developer</span>
+            <span class="user-role" id="sidebar-user-role">Full-Stack Dev</span>
+          </div>
+        </div>
+        <button class="btn btn-ghost btn-icon" id="logout-btn" title="Sign out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+    </aside>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Main Content Frame -->
+    <div class="app-main">
+      <!-- Navbar -->
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <button class="mobile-menu-btn" id="mobile-sidebar-toggle" aria-label="Toggle navigation">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="page-title">
+            <span>DevFlow Command Center</span>
+          </div>
+        </div>
+
+        <div class="navbar-right">
+          <button class="btn btn-ai btn-sm" id="global-ai-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            <span>Ask Groq AI</span>
+          </button>
+
+          <div style="position: relative;">
+            <button class="btn btn-secondary btn-icon" id="notification-btn" aria-label="Notifications">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <span id="unread-notification-dot" style="display:none; position: absolute; top: 6px; right: 6px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%;"></span>
+            </button>
+
+            <div id="notification-dropdown" class="glass-panel" style="display:none; position: absolute; right: 0; top: 48px; width: 340px; padding: 1rem; z-index: 200;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem;">
+                <h4 style="font-size: 0.95rem; font-weight: 700;">Notifications</h4>
+                <button id="mark-all-read-btn" class="btn-ghost" style="font-size: 0.75rem; cursor: pointer; color: var(--primary-light);">Mark all read</button>
+              </div>
+              <div id="notification-items-list" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 280px; overflow-y: auto;"></div>
+            </div>
+          </div>
+
+          <a href="profile.html" class="user-avatar" id="nav-user-avatar" title="View Profile" style="text-decoration: none;">DF</a>
+        </div>
+      </header>
+
+      <!-- App Content Area -->
+      <main class="app-content">
+        <!-- Hero Banner -->
+        <section class="dash-hero">
+          <div class="dash-hero-content">
+            <h2 id="dash-greeting">Welcome back, Developer 🚀</h2>
+            <p id="dash-today-date">Loading workspace telemetry...</p>
+          </div>
+          <div class="dash-hero-actions">
+            <button class="btn btn-ai" id="trigger-daily-plan-btn">
+              <span>⚡ Formulate AI Daily Plan</span>
+            </button>
+            <a href="tasks.html" class="btn btn-primary">+ New Task</a>
+          </div>
+        </section>
+
+        <!-- AI Daily Plan Result Container (hidden until generated) -->
+        <div id="ai-daily-plan-banner" class="ai-planner-banner" style="display: none;">
+          <div class="ai-planner-icon">⚡</div>
+          <div class="ai-planner-content">
+            <div class="ai-planner-title">
+              <span>Groq AI Daily Developer Schedule</span>
+              <span class="badge badge-low">Generated</span>
+            </div>
+            <div id="ai-daily-plan-text" class="ai-planner-desc"></div>
+          </div>
+        </div>
+
+        <!-- Metrics Grid -->
+        <section class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Total Tasks</span>
+              <div class="metric-icon-wrap icon-purple">📋</div>
+            </div>
+            <div class="metric-value" id="stat-total-tasks">0</div>
+            <div class="metric-footer">Across all sprint cycles</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">In Progress</span>
+              <div class="metric-icon-wrap icon-cyan">⚡</div>
+            </div>
+            <div class="metric-value" id="stat-in-progress">0</div>
+            <div class="metric-footer">Active engineering load</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Focus Time</span>
+              <div class="metric-icon-wrap icon-emerald">⏱️</div>
+            </div>
+            <div class="metric-value" id="stat-focus-time">0h</div>
+            <div class="metric-footer">Logged deep work hours</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Velocity Rate</span>
+              <div class="metric-icon-wrap icon-amber">📈</div>
+            </div>
+            <div class="metric-value" id="stat-completion-rate">0%</div>
+            <div class="metric-footer trend-up">Sprint completion ratio</div>
+          </div>
+        </section>
+
+        <!-- Main Dashboard 2-Column Grid -->
+        <div class="dashboard-grid">
+          <!-- Left Column: Active Tasks -->
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+              <h3 style="font-size: 1.1rem; font-weight: 700; display:flex; align-items:center; gap:0.5rem;">
+                <span>🎯</span> Active Sprint Tasks
+              </h3>
+              <a href="tasks.html" class="btn btn-ghost btn-sm">View Kanban →</a>
+            </div>
+            <div id="dash-sprint-tasks" style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <div style="text-align:center; padding: 2rem; color: var(--text-muted);">Loading sprint tasks...</div>
+            </div>
+          </div>
+
+          <!-- Right Column: Quick Focus & Activity -->
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <!-- Focus Quick Box -->
+            <div class="glass-panel" style="padding: 1.5rem;">
+              <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; display:flex; align-items:center; gap:0.5rem;">
+                <span>⏱️</span> Deep Work Synthesizer
+              </h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                Eliminate context switching. Enter flow state with integrated white noise and Pomodoro telemetry.
+              </p>
+              <a href="focus.html" class="btn btn-secondary btn-sm" style="width: 100%;">
+                Open Focus Mode Session →
+              </a>
+            </div>
+
+            <!-- Activity Feed -->
+            <div class="glass-panel" style="padding: 1.5rem;">
+              <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; display:flex; align-items:center; gap:0.5rem;">
+                <span>⚡</span> Realtime Activity
+              </h3>
+              <div class="activity-list" id="activity-feed-list">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Reusable Global Modal Backdrop -->
+  <div class="modal-backdrop" id="app-modal-backdrop">
+    <div class="modal-container" id="app-modal-container">
+      <div class="modal-header">
+        <h3 id="modal-title">Modal</h3>
+        <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body-content"></div>
+      <div class="modal-footer" id="modal-footer-actions">
+        <button class="btn btn-secondary" id="modal-cancel-btn">Cancel</button>
+        <button class="btn btn-primary" id="modal-confirm-btn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Groq AI Modal Assistant -->
+  <div id="ai-assistant-modal" class="modal-backdrop">
+    <div class="modal-container" style="max-width: 640px;">
+      <div class="modal-header" style="background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(99,102,241,0.1));">
+        <div style="display:flex; align-items:center; gap: 0.6rem;">
+          <span style="display:inline-flex; width: 28px; height: 28px; border-radius: 6px; background: var(--grad-ai); align-items:center; justify-content:center; color:#fff; font-size:0.8rem;">⚡</span>
+          <h3>DevFlow Groq AI Assistant</h3>
+        </div>
+        <button class="modal-close-btn" id="ai-modal-close">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 1.5rem;">
+        <div style="margin-bottom: 1.25rem;">
+          <label class="form-label">Select Action Preset:</label>
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm ai-preset-btn btn-primary" data-mode="breakdown">Break down task</button>
+            <button class="btn btn-secondary btn-sm ai-preset-btn" data-mode="daily">Plan my day</button>
+            <button class="btn btn-secondary btn-sm ai-preset-btn" data-mode="priority">Analyze priorities</button>
+            <button class="btn btn-secondary btn-sm ai-preset-btn" data-mode="project">New project blueprint</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <textarea id="ai-prompt-input" class="form-control" rows="3" placeholder="Enter an engineering task or requirement for Groq Llama 3..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 1.25rem;">
+          <button class="btn btn-ai" id="ai-run-btn">
+            <span>Run Groq AI Inference</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </div>
+
+        <div id="ai-result-area" class="glass-panel" style="display:none; padding: 1.25rem; max-height: 280px; overflow-y: auto;">
+          <div id="ai-result-spinner" style="text-align: center; padding: 1.5rem; display:none;">
+            <div class="spinner"></div>
+            <p style="margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.85rem;">Communicating with Groq via Supabase Edge Function...</p>
+          </div>
+          <div id="ai-result-content"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

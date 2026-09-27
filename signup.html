@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - DevFlow</title>
+  <meta name="description" content="Register your developer account on DevFlow.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="auth-wrapper">
+    <div class="auth-glow-1"></div>
+    <div class="auth-glow-2"></div>
+
+    <div class="auth-card">
+      <div class="auth-header">
+        <a href="index.html" class="auth-logo">
+          <img src="assets/images/logo.svg" alt="DevFlow Logo" style="height: 42px;">
+        </a>
+        <h1>Create Account</h1>
+        <p>Set up your autonomous developer workspace</p>
+      </div>
+
+      <div id="signup-error-alert" style="display: none; padding: 0.75rem 1rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: var(--radius-md); color: #f87171; font-size: 0.85rem; margin-bottom: 1.25rem;"></div>
+
+      <form id="signup-form">
+        <div class="form-group">
+          <label class="form-label" for="fullName">Full Name</label>
+          <input type="text" id="fullName" class="form-control" placeholder="Alex Rivera" required autocomplete="name" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Developer Email</label>
+          <input type="email" id="email" class="form-control" placeholder="name@company.com" required autocomplete="email" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="role">Engineering Role</label>
+          <select id="role" class="form-control">
+            <option value="Full-Stack Engineer" selected>Full-Stack Engineer</option>
+            <option value="Backend Architect">Backend Architect</option>
+            <option value="Frontend Developer">Frontend Developer</option>
+            <option value="DevOps / Cloud Engineer">DevOps / Cloud Engineer</option>
+            <option value="AI / ML Engineer">AI / ML Engineer</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password (min 6 chars)</label>
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="new-password" />
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+          Create Developer Workspace
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        Already have an account? <a href="login.html">Sign in here</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

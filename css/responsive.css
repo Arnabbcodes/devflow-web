@@ -1,0 +1,102 @@
+/* ==========================================================================
+   DevFlow Responsive & Mobile Breakpoints (responsive.css)
+   ========================================================================== */
+
+/* Mobile Sidebar Drawer Overlay */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 45;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  padding: 0.4rem;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .app-main {
+    margin-left: 0 !important;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .app-content {
+    padding: 1.25rem 1rem;
+  }
+
+  .dash-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .dash-hero-actions {
+    width: 100%;
+  }
+
+  .dash-hero-actions .btn {
+    flex: 1;
+  }
+
+  .top-navbar {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-container {
+    max-width: 96vw;
+    margin: 0.5rem;
+  }
+
+  .social-auth-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timer-digits {
+    font-size: 3.2rem;
+  }
+
+  .timer-circle-wrap {
+    width: 260px;
+    height: 260px;
+  }
+}

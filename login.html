@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - DevFlow</title>
+  <meta name="description" content="Sign in to your DevFlow developer workspace.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="auth-wrapper">
+    <div class="auth-glow-1"></div>
+    <div class="auth-glow-2"></div>
+
+    <div class="auth-card">
+      <div class="auth-header">
+        <a href="index.html" class="auth-logo">
+          <img src="assets/images/logo.svg" alt="DevFlow Logo" style="height: 42px;">
+        </a>
+        <h1>Welcome Back</h1>
+        <p>Access your AI developer workspace and projects</p>
+      </div>
+
+      <div id="login-error-alert" style="display: none; padding: 0.75rem 1rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: var(--radius-md); color: #f87171; font-size: 0.85rem; margin-bottom: 1.25rem;"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label" for="email">Developer Email</label>
+          <input type="email" id="email" class="form-control" placeholder="name@company.com" required autocomplete="email" />
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <label for="password">Password</label>
+            <a href="#" style="font-size: 0.75rem; color: var(--primary-light);">Forgot?</a>
+          </div>
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password" />
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+          Sign In to DevFlow
+        </button>
+      </form>
+
+      <!-- Quick Demo Login bypass -->
+      <div class="demo-quick-login">
+        <p>⚡ Testing locally without Supabase credentials yet?</p>
+        <button type="button" id="demo-login-btn" class="btn btn-ai btn-sm" style="width: 100%;">
+          One-Click Demo Developer Login
+        </button>
+      </div>
+
+      <div class="auth-footer">
+        Don't have an account? <a href="signup.html">Create an account</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

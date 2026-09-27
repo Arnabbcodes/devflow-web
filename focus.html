@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deep Work Focus Mode - DevFlow Workspace</title>
+  <meta name="description" content="Synthesized Pomodoro timer and ambient audio generator for deep work flow.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/focus.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- Demo Notice Banner -->
+  <div id="demo-mode-banner" class="global-banner">
+    <div class="banner-content">
+      <span class="banner-badge">Demo Mode</span>
+      <span>Operating in local simulation. Connect your live Supabase &amp; Groq keys in <a href="profile.html" style="text-decoration: underline; font-weight: bold; color: #fff;">Profile Settings</a>.</span>
+    </div>
+    <button id="close-demo-banner" class="banner-close" aria-label="Dismiss banner">✕</button>
+  </div>
+
+  <div class="app-container">
+    <aside class="sidebar" id="app-sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+          <img src="assets/images/logo.svg" alt="DevFlow Logo" class="sidebar-logo">
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Core Workspace</div>
+        <a href="dashboard.html" class="nav-item" data-page="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"></rect><rect x="14" y="3" width="7" height="5" rx="1"></rect><rect x="14" y="12" width="7" height="9" rx="1"></rect><rect x="3" y="16" width="7" height="5" rx="1"></rect></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="projects.html" class="nav-item" data-page="projects">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          <span>Projects</span>
+          <span class="nav-badge" id="sidebar-projects-count">0</span>
+        </a>
+        <a href="tasks.html" class="nav-item" data-page="tasks">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          <span>Tasks</span>
+          <span class="nav-badge" id="sidebar-tasks-count">0</span>
+        </a>
+
+        <div class="nav-section-title">Intelligence &amp; Engine</div>
+        <a href="workflow.html" class="nav-item" data-page="workflow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg>
+          <span>Automations</span>
+        </a>
+        <a href="analytics.html" class="nav-item" data-page="analytics">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span>Analytics</span>
+        </a>
+        <a href="focus.html" class="nav-item active" data-page="focus">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span>Focus Mode</span>
+        </a>
+        <a href="notes.html" class="nav-item" data-page="notes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span>Notes</span>
+        </a>
+
+        <div class="nav-section-title">Settings</div>
+        <a href="profile.html" class="nav-item" data-page="profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>Profile &amp; Keys</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-badge">
+          <div class="user-avatar" id="sidebar-user-avatar">DF</div>
+          <div class="user-info">
+            <span class="user-name" id="sidebar-user-name">Developer</span>
+            <span class="user-role" id="sidebar-user-role">Full-Stack Dev</span>
+          </div>
+        </div>
+        <button class="btn btn-ghost btn-icon" id="logout-btn" title="Sign out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+    </aside>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <div class="app-main">
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <button class="mobile-menu-btn" id="mobile-sidebar-toggle" aria-label="Toggle navigation">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="page-title">
+            <span>Deep Work Focus Mode</span>
+          </div>
+        </div>
+
+        <div class="navbar-right">
+          <button class="btn btn-ai btn-sm" id="global-ai-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            <span>Ask Groq AI</span>
+          </button>
+
+          <div style="position: relative;">
+            <button class="btn btn-secondary btn-icon" id="notification-btn" aria-label="Notifications">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <span id="unread-notification-dot" style="display:none; position: absolute; top: 6px; right: 6px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%;"></span>
+            </button>
+            <div id="notification-dropdown" class="glass-panel" style="display:none; position: absolute; right: 0; top: 48px; width: 340px; padding: 1rem; z-index: 200;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem;">
+                <h4 style="font-size: 0.95rem; font-weight: 700;">Notifications</h4>
+                <button id="mark-all-read-btn" class="btn-ghost" style="font-size: 0.75rem; cursor: pointer; color: var(--primary-light);">Mark all read</button>
+              </div>
+              <div id="notification-items-list" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 280px; overflow-y: auto;"></div>
+            </div>
+          </div>
+
+          <a href="profile.html" class="user-avatar" id="nav-user-avatar" title="View Profile" style="text-decoration: none;">DF</a>
+        </div>
+      </header>
+
+      <main class="app-content">
+        <div class="focus-container">
+          <!-- Mode Tabs -->
+          <div class="focus-modes-tabs">
+            <button class="focus-tab-btn active" data-mode="pomodoro">Pomodoro (25m)</button>
+            <button class="focus-tab-btn" data-mode="short_break">Short Break (5m)</button>
+            <button class="focus-tab-btn" data-mode="long_break">Long Break (15m)</button>
+            <button class="focus-tab-btn" data-mode="flow">Flow State (50m)</button>
+          </div>
+
+          <!-- Circular SVG Timer -->
+          <div class="timer-circle-wrap">
+            <svg class="timer-svg" viewBox="0 0 320 320">
+              <defs>
+                <linearGradient id="timerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#6366f1" />
+                  <stop offset="100%" stop-color="#06b6d4" />
+                </linearGradient>
+              </defs>
+              <circle class="timer-circle-bg" cx="160" cy="160" r="140" />
+              <circle class="timer-circle-progress" id="timer-circle-progress" cx="160" cy="160" r="140" />
+            </svg>
+
+            <div class="timer-inner-content">
+              <div class="timer-digits" id="timer-digits">25:00</div>
+              <div class="timer-state-label">DEEP WORK FOCUS</div>
+            </div>
+          </div>
+
+          <!-- Timer Action Controls -->
+          <div class="timer-controls">
+            <button class="btn btn-secondary btn-icon" id="btn-timer-reset" title="Reset Session">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v6h6"></path><path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path><path d="M21 22v-6h-6"></path><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path></svg>
+            </button>
+            <button class="btn btn-timer-action btn-timer-play" id="btn-timer-toggle" title="Start Focus">
+              ▶
+            </button>
+          </div>
+
+          <!-- Link Active Task Selector -->
+          <div class="focus-task-select-box">
+            <div>
+              <strong style="display:block; font-size: 0.95rem; margin-bottom: 0.2rem;">Linked Sprint Task</strong>
+              <span style="font-size: 0.8rem; color: var(--text-secondary);">Focus duration will be recorded to this task's actual minutes.</span>
+            </div>
+            <select id="focus-task-select" class="form-control" style="max-width: 320px;">
+              <option value="">-- No specific task (Free Flow) --</option>
+            </select>
+          </div>
+
+          <!-- Synthesized Ambient Sound Machine -->
+          <div class="ambient-controls">
+            <div>
+              <strong style="display:block; font-size: 0.95rem; margin-bottom: 0.2rem;">🎧 Audio Synthesizer</strong>
+              <span style="font-size: 0.8rem; color: var(--text-secondary);">Web Audio generator for deep cognitive concentration</span>
+            </div>
+            <div class="ambient-options">
+              <button class="ambient-btn" data-sound="white_noise"><span>🌊 White Noise</span></button>
+              <button class="ambient-btn" data-sound="rain"><span>🌧️ Rain</span></button>
+              <button class="ambient-btn" data-sound="cyber"><span>🤖 Cyber Drone</span></button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Reusable Global Modal Backdrop & AI Panel -->
+  <div class="modal-backdrop" id="app-modal-backdrop">
+    <div class="modal-container" id="app-modal-container">
+      <div class="modal-header">
+        <h3 id="modal-title">Modal</h3>
+        <button class="modal-close-btn" id="modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body-content"></div>
+      <div class="modal-footer" id="modal-footer-actions">
+        <button class="btn btn-secondary" id="modal-cancel-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="ai-assistant-modal" class="modal-backdrop">
+    <div class="modal-container" style="max-width: 640px;">
+      <div class="modal-header" style="background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(99,102,241,0.1));">
+        <h3>DevFlow Groq AI Assistant</h3>
+        <button class="modal-close-btn" id="ai-modal-close">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 1.5rem;">
+        <textarea id="ai-prompt-input" class="form-control" rows="3" placeholder="Ask Groq..."></textarea>
+        <button class="btn btn-ai" id="ai-run-btn" style="margin-top: 1rem;">Run Groq AI</button>
+        <div id="ai-result-area" class="glass-panel" style="display:none; padding: 1rem; margin-top: 1rem;">
+          <div id="ai-result-spinner" style="display:none;"><div class="spinner"></div></div>
+          <div id="ai-result-content"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!-- components/taskCard.html - Template representation of a task card -->
+<div class="task-card" draggable="true" data-id="{{id}}">
+  <div class="task-card-header">
+    <span class="badge badge-{{priority}}">{{priority}}</span>
+    <button class="btn btn-ghost btn-icon btn-sm task-more-btn" title="Options">•••</button>
+  </div>
+  <h4 class="task-card-title">{{title}}</h4>
+  <p class="task-card-desc">{{description}}</p>
+  
+  <div class="task-subtasks-preview">
+    <span>📋 Subtasks ({{completed_subtasks}}/{{total_subtasks}})</span>
+    <button class="btn btn-ai btn-sm btn-breakdown-card" data-task-id="{{id}}" title="AI Subtask Breakdown">
+      ⚡ AI Breakdown
+    </button>
+  </div>
+
+  <div class="task-card-footer">
+    <span class="task-due-date {{overdueClass}}">
+      📅 {{dueDateFormatted}}
+    </span>
+    <span class="project-tag-pill font-mono" style="font-size:0.72rem; color:var(--primary-light);">
+      {{projectName}}
+    </span>
+  </div>
+</div>

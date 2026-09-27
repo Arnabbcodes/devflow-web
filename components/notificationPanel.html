@@ -1,0 +1,8 @@
+<!-- components/notificationPanel.html - Notification Item Template -->
+<div class="notification-item" style="padding: 0.75rem; border-radius: var(--radius-md); background: rgba(255,255,255,0.03); border-left: 3px solid var(--primary); display: flex; flex-direction: column; gap: 0.25rem;">
+  <div style="display:flex; justify-content: space-between; align-items: center;">
+    <strong style="font-size: 0.85rem; color: var(--text-primary);">{{title}}</strong>
+    <span style="font-size: 0.7rem; color: var(--text-muted);">{{timeAgo}}</span>
+  </div>
+  <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.35; margin: 0;">{{message}}</p>
+</div>

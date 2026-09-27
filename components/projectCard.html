@@ -1,0 +1,34 @@
+<!-- components/projectCard.html - Template representation of a project card -->
+<div class="project-card" data-id="{{id}}">
+  <div class="project-top">
+    <div class="project-color-badge" data-color="{{color}}" style="background: var(--project-color, #6366f1);">
+      {{initials}}
+    </div>
+    <div class="project-actions">
+      <button class="project-menu-btn" data-id="{{id}}">•••</button>
+    </div>
+  </div>
+  <h3 class="project-name">{{name}}</h3>
+  <p class="project-desc">{{description}}</p>
+  
+  <div class="project-tags">
+    {{tagsHtml}}
+  </div>
+
+  <div class="project-meta-stats">
+    <span>Progress</span>
+    <span class="font-mono">{{progress}}%</span>
+  </div>
+  <div class="progress-bar-bg" style="margin-bottom: 1rem;">
+    <div class="progress-bar-fill" data-progress="{{progress}}" style="width: var(--progress, 0%); background: var(--project-color, var(--primary));"></div>
+  </div>
+
+  <div class="project-footer">
+    <span style="font-size: 0.8rem; color: var(--text-muted);">
+      {{taskCount}} tasks
+    </span>
+    <button class="btn btn-secondary btn-sm open-project-btn" data-id="{{id}}">
+      Open Project →
+    </button>
+  </div>
+</div>

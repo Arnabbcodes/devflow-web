@@ -1,0 +1,85 @@
+/* ==========================================================================
+   DevFlow Design Tokens & Variables
+   ========================================================================== */
+
+:root {
+  /* Fonts */
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, monospace;
+
+  /* Theme: Sleek Developer Dark Canvas */
+  --bg-main: #070b14;
+  --bg-secondary: #0c1222;
+  --bg-card: rgba(16, 24, 44, 0.75);
+  --bg-card-hover: rgba(22, 33, 60, 0.85);
+  --bg-card-solid: #111a2e;
+  --bg-overlay: rgba(7, 11, 20, 0.82);
+  --bg-input: rgba(13, 19, 36, 0.9);
+  --bg-input-focus: rgba(18, 27, 50, 0.95);
+
+  /* Primary & Accent Palettes */
+  --primary: #6366f1;
+  --primary-light: #818cf8;
+  --primary-dark: #4f46e5;
+  --primary-glow: rgba(99, 102, 241, 0.35);
+
+  --secondary: #06b6d4;
+  --secondary-light: #22d3ee;
+  --secondary-dark: #0891b2;
+  --secondary-glow: rgba(6, 182, 212, 0.35);
+
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  
+  /* Status Colors */
+  --success: #10b981;
+  --success-glow: rgba(16, 185, 129, 0.3);
+  --warning: #f59e0b;
+  --warning-glow: rgba(245, 158, 11, 0.3);
+  --danger: #ef4444;
+  --danger-glow: rgba(239, 68, 68, 0.3);
+  --info: #3b82f6;
+
+  /* Neutral Text & Borders */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverse: #0f172a;
+
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-card: rgba(255, 255, 255, 0.12);
+  --border-focus: #6366f1;
+  --border-highlight: rgba(99, 102, 241, 0.4);
+
+  /* Gradients */
+  --grad-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+  --grad-hero: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.22) 0%, rgba(6, 182, 212, 0.08) 40%, transparent 70%);
+  --grad-card-glow: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+  --grad-ai: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 0 25px var(--primary-glow);
+  --shadow-cyan-glow: 0 0 25px var(--secondary-glow);
+
+  /* Border Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Layout */
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 72px;
+  --navbar-height: 68px;
+  --max-width: 1400px;
+}
